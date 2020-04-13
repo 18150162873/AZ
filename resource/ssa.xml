@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ssa>
+	<log4j>log4j.xml</log4j>
+	<file-check>10</file-check>
+	<module name="WmsServer">
+		<enterprise name="TransactionServiceSORemote">
+			<provider>wmsdb:6840</provider>
+			<factory>org.jnp.interfaces.NamingContextFactory</factory>
+			<jndi-name>TransactionServiceSORemote</jndi-name>
+		</enterprise>
+	</module>
+</ssa>

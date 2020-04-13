@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<jboss-deployment-structure>
+	<ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+	<deployment>
+		<exclusions>
+			<module name="org.apache.log4j" />
+			<module name="org.jboss.as.logging"/>
+			<module name="org.jboss.logging"/>
+			<module name="org.jboss.logmanager"/>
+		</exclusions>	
+		<dependencies>
+			<module name="com.infor.sce.jboss7.logger"/>
+			<module name="com.infor.sce.jboss7.jdbc"/>
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+	
+	
+	<bean id="schedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			 	<!-- <ref local="receiptcronTrigger" />
+				<ref local="boxsortcronTrigger" /> -->
+				<ref local="receiptDownJobTrigger"/> 
+				<ref local="receiptUploadJobTrigger" />
+				<ref local="receiptCountJobTrigger" />
+				<ref local="receiptTaskJobJobTrigger" />
+			</list>
+		</property>
+	         <property name="startupDelay" value="300"/>
+	</bean>
+
+	
+	<bean id ="receiptDownJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="receiptDowmloadTask" />
+		<property name="targetMethod" value="work" />
+		<property name="concurrent" value="false" />
+	 </bean>
+
+
+	<bean id="receiptDownJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="receiptDownJob" />
+		<property name="cronExpression" value="${quartz.receiptDownload.contrigger.repeatInterval}" />
+	</bean>
+	
+	
+	<bean id ="receiptUploadJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="receiptUploadTask" />
+		<property name="targetMethod" value="work" />
+		<property name="concurrent" value="false" />
+	 </bean>
+
+
+	<bean id="receiptUploadJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="receiptUploadJob" />
+		<property name="cronExpression" value="${quartz.receiptUpload.contrigger.repeatInterval}" />
+	</bean>
+	
+	<bean id ="receiptCountJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="receiptCountTask" />
+		<property name="targetMethod" value="work" />
+		<property name="concurrent" value="false" />
+	 </bean>
+
+
+	<bean id="receiptCountJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="receiptCountJob" />
+		<property name="cronExpression" value="${quartz.receiptCountJob.contrigger.repeatInterval}" />
+	</bean>
+	
+	<bean id ="receiptTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="receiptTask" />
+		<property name="targetMethod" value="work" />
+		<property name="concurrent" value="false" />
+	 </bean>
+
+
+	<bean id="receiptTaskJobJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="receiptTaskJob" />
+		<property name="cronExpression" value="${quartz.receiptTaskJob.contrigger.repeatInterval}" />
+	</bean>
+
+</beans>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 使用注解 IOC -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd           
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
+
+
+<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.username}</value>
+		</property>
+	</bean>
+
+
+	<!-- <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"> 
+		<property name="configLocation"
+			value="classpath:config/properties/SqlMapConfig_spring.xml" />
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+	</bean>
+-->
+
+<!-- 	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean> -->
+
+	<!-- <context:annotation-config />
+	<context:component-scan base-package="org" />
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" /> -->
+
+ 	<!-- Spring配置事务,ref = 数据源 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="globalRollbackOnParticipationFailure" value="false" /> 
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

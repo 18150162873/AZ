@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>peacebird</jndi-name>
+    <connection-url>jdbc:oracle:thin:@192.168.1.205:1521:scprd</connection-url>
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+    <user-name>peacebird</user-name>
+    <password>peacebird</password>
+    <min-pool-size>0</min-pool-size>
+    <max-pool-size>100</max-pool-size>
+      <metadata>
+         <type-mapping>Oracle</type-mapping>
+      </metadata>
+  </local-tx-datasource>
+
+</datasources>
